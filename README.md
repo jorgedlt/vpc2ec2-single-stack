@@ -6,4 +6,6 @@ an entire AWS EC2 Stack form VPC up.
 
 I plan on adding additional modules, for additiopnal private EC2, ELB, RDS, logging and Monitoring in the near future.
 
+be sure and see https://github.com/jorgedlt/awseasy - al be it, not a dependcy but works well in concert.
+
 /Jorge
