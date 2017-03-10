@@ -5,8 +5,6 @@
 #
 
 # jorgedlt@gmail.com - 03 MAR 2017
-# additional documentation
-# see - https://docs.google.com/document/d/1RdN2hbPeSvrCDTa76iZyExmVhF-Ct9iv-TcFNMRZwSU/edit
 
 #
 #export AWS_ACCESS_KEY_ID=
