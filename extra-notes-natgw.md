@@ -35,7 +35,7 @@ Which returns ...
 
 #
 
-### Step 3
+### Step 2
 
 How many routers do I have ?
 
