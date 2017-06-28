@@ -24,7 +24,7 @@ export vpc_cidr="10.17.0.0/16"
 export pub_cidr="10.17.0.0/24"
 export prv_cidr="10.17.1.0/24"
 
-export ec2_stack="AA1-EC2"
+export ec2_stack="WR-ABC"
 # export ec2_keyname="cf-test-jdlt" # us-east-2
 # export ec2_keyname="cf-testw1-jdlt" # us-west-1
 export ec2_keyname="devops-west2-jdlt" # us-west-2
