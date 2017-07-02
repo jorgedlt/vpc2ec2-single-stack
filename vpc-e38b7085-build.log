@@ -1,0 +1,249 @@
+Sun Jul  2 10:40:39 EDT 2017
+vpc-e38b7085
+{
+    "Vpcs": [
+        {
+            "VpcId": "vpc-e38b7085", 
+            "InstanceTenancy": "default", 
+            "Tags": [
+                {
+                    "Value": "vpc-breakup", 
+                    "Key": "Name"
+                }
+            ], 
+            "State": "available", 
+            "DhcpOptionsId": "dopt-9e07fafb", 
+            "CidrBlock": "10.27.0.0/16", 
+            "IsDefault": false
+        }, 
+        {
+            "VpcId": "vpc-acf487c9", 
+            "InstanceTenancy": "default", 
+            "State": "available", 
+            "DhcpOptionsId": "dopt-9e07fafb", 
+            "CidrBlock": "172.31.0.0/16", 
+            "IsDefault": true
+        }
+    ]
+}
+publicSubnet subnet-f64de5ad
+Select Availability Zone
+subnet-8a4ee6d1
+{
+    "Subnets": [
+        {
+            "VpcId": "vpc-acf487c9", 
+            "CidrBlock": "172.31.32.0/20", 
+            "MapPublicIpOnLaunch": true, 
+            "DefaultForAz": true, 
+            "State": "available", 
+            "AvailabilityZone": "us-west-2a", 
+            "SubnetId": "subnet-d1b6d6a6", 
+            "AvailableIpAddressCount": 4089
+        }, 
+        {
+            "VpcId": "vpc-e38b7085", 
+            "Tags": [
+                {
+                    "Value": "privateSubnet-vpc-breakup", 
+                    "Key": "Name"
+                }
+            ], 
+            "CidrBlock": "10.27.1.0/24", 
+            "MapPublicIpOnLaunch": false, 
+            "DefaultForAz": false, 
+            "State": "available", 
+            "AvailabilityZone": "us-west-2c", 
+            "SubnetId": "subnet-8a4ee6d1", 
+            "AvailableIpAddressCount": 251
+        }, 
+        {
+            "VpcId": "vpc-e38b7085", 
+            "Tags": [
+                {
+                    "Value": "publicSubnet-vpc-breakup", 
+                    "Key": "Name"
+                }
+            ], 
+            "CidrBlock": "10.27.0.0/24", 
+            "MapPublicIpOnLaunch": false, 
+            "DefaultForAz": false, 
+            "State": "available", 
+            "AvailabilityZone": "us-west-2c", 
+            "SubnetId": "subnet-f64de5ad", 
+            "AvailableIpAddressCount": 251
+        }, 
+        {
+            "VpcId": "vpc-acf487c9", 
+            "CidrBlock": "172.31.16.0/20", 
+            "MapPublicIpOnLaunch": true, 
+            "DefaultForAz": true, 
+            "State": "available", 
+            "AvailabilityZone": "us-west-2b", 
+            "SubnetId": "subnet-9395d7f6", 
+            "AvailableIpAddressCount": 4088
+        }, 
+        {
+            "VpcId": "vpc-acf487c9", 
+            "CidrBlock": "172.31.0.0/20", 
+            "MapPublicIpOnLaunch": true, 
+            "DefaultForAz": true, 
+            "State": "available", 
+            "AvailabilityZone": "us-west-2c", 
+            "SubnetId": "subnet-ddb53084", 
+            "AvailableIpAddressCount": 4090
+        }
+    ]
+}
+Create Internet Gateway
+Attach Gateway
+Create Route Table
+Create Routes
+{
+    "RouteTables": [
+        {
+            "Associations": [
+                {
+                    "RouteTableAssociationId": "rtbassoc-e28ddf9b", 
+                    "Main": true, 
+                    "RouteTableId": "rtb-a60544c0"
+                }
+            ], 
+            "RouteTableId": "rtb-a60544c0", 
+            "VpcId": "vpc-e38b7085", 
+            "PropagatingVgws": [], 
+            "Tags": [], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "10.27.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }
+            ]
+        }, 
+        {
+            "Associations": [
+                {
+                    "RouteTableAssociationId": "rtbassoc-28affe4d", 
+                    "Main": true, 
+                    "RouteTableId": "rtb-284f344d"
+                }
+            ], 
+            "RouteTableId": "rtb-284f344d", 
+            "VpcId": "vpc-acf487c9", 
+            "PropagatingVgws": [], 
+            "Tags": [], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "172.31.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }, 
+                {
+                    "GatewayId": "igw-6e4ec80b", 
+                    "DestinationCidrBlock": "0.0.0.0/0", 
+                    "State": "active", 
+                    "Origin": "CreateRoute"
+                }
+            ]
+        }, 
+        {
+            "Associations": [], 
+            "RouteTableId": "rtb-73044515", 
+            "VpcId": "vpc-e38b7085", 
+            "PropagatingVgws": [], 
+            "Tags": [
+                {
+                    "Value": "Route-vpc-breakup", 
+                    "Key": "Name"
+                }
+            ], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "10.27.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }, 
+                {
+                    "GatewayId": "igw-fc6dda9b", 
+                    "DestinationCidrBlock": "0.0.0.0/0", 
+                    "State": "active", 
+                    "Origin": "CreateRoute"
+                }
+            ]
+        }
+    ]
+}
+Route Associations
+{
+    "AssociationId": "rtbassoc-e48ddf9d"
+}
+Create Securitygroup
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1", 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ], 
+                    "UserIdGroupPairs": [], 
+                    "PrefixListIds": []
+                }
+            ], 
+            "Description": "Security group for SSH access", 
+            "IpPermissions": [], 
+            "GroupName": "SSHAccess_vpc-breakup", 
+            "VpcId": "vpc-e38b7085", 
+            "OwnerId": "674553401808", 
+            "GroupId": "sg-44b0773e"
+        }
+    ]
+}
+SecurityGroup Values
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1", 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ], 
+                    "UserIdGroupPairs": [], 
+                    "PrefixListIds": []
+                }
+            ], 
+            "Description": "Security group for SSH access", 
+            "IpPermissions": [
+                {
+                    "PrefixListIds": [], 
+                    "FromPort": 22, 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "98.251.81.179/32"
+                        }, 
+                        {
+                            "CidrIp": "173.46.67.139/32"
+                        }
+                    ], 
+                    "ToPort": 22, 
+                    "IpProtocol": "tcp", 
+                    "UserIdGroupPairs": []
+                }
+            ], 
+            "GroupName": "SSHAccess_vpc-breakup", 
+            "VpcId": "vpc-e38b7085", 
+            "OwnerId": "674553401808", 
+            "GroupId": "sg-44b0773e"
+        }
+    ]
+}
