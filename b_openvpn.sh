@@ -10,20 +10,22 @@
 # export AWS_ACCESS_KEY_ID=
 # export AWS_SECRET_ACCESS_KEY=
 
-# export AWS_DEFAULT_REGION=us-east-1    ; export ec2_ami="ami-2ef48339"    # us-east-1
-# export AWS_DEFAULT_REGION=us-east-2  ; export ec2_ami="ami-70edb615"      # us-east-2
-# export AWS_DEFAULT_REGION=us-west-1  ; export ec2_ami="ami-a9a8e4c9"      # us-west-1
-export AWS_DEFAULT_REGION=us-west-2  ; export ec2_ami="ami-746aba14"        # us-west-2
+export AWS_DEFAULT_REGION=us-east-1    ; export ec2_ami="ami-2ef48339"    # us-east-1
+# export AWS_DEFAULT_REGION=us-east-2  ; export ec2_ami="ami-70edb615"    # us-east-2
+# export AWS_DEFAULT_REGION=us-west-1  ; export ec2_ami="ami-a9a8e4c9"    # us-west-1
+# export AWS_DEFAULT_REGION=us-west-2  ; export ec2_ami="ami-746aba14"    # us-west-2
 # ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20160907 ( ebs | hvm )
 
-export vpc_stack="tabhooks"
+export vpc_stack="openvpn"
 # Network Settings - network are valid /16 - /28
 export vpc_cidr="10.27.0.0/16"
 export pub_cidr="10.27.0.0/24"
 export prv_cidr="10.27.1.0/24"
 
-export ec2_stack="tabhooks"
-export ec2_keyname="ChittaRanjan-US-WEST-2"  # us-west-2
+export ec2_stack="openvpn"
+export ec2_keyname="sk-useast1-jdlt"      # us-east-1
+# export ec2_keyname="cf-test-jdlt"       # us-east-2
+# export ec2_keyname="cf-testw1-jdlt"     # us-west-1
 
 # t2.micro | t2.small | t2.medium | t2.large #
 export ec2_type="t2.medium"
