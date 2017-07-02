@@ -108,6 +108,18 @@ echo SecurityGroup Values >> ${VpcId}-build.log
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
 
+
+ exit
+
+ the ec2 builds are failing becuase the keys are beneath the root, therefore the key
+ need to be on par with my current
+
+ one - is generate and delate as needed.
+
+ two - is pre create and ignore to github
+
+ the real solution lies in the ( GetEnv-AWS.sh ) Environment harverst script
+
 sleep 10
 # Public EC2
 echo "Create EC2-Public"
