@@ -10,8 +10,8 @@
 # export AWS_ACCESS_KEY_ID=
 # export AWS_SECRET_ACCESS_KEY=
 
-export AWS_DEFAULT_REGION=us-east-1    ; export ec2_ami="ami-2ef48339"    # us-east-1
-# export AWS_DEFAULT_REGION=us-east-2  ; export ec2_ami="ami-70edb615"    # us-east-2
+# export AWS_DEFAULT_REGION=us-east-1    ; export ec2_ami="ami-2ef48339"    # us-east-1
+export AWS_DEFAULT_REGION=us-east-2  ; export ec2_ami="ami-70edb615"    # us-east-2
 # export AWS_DEFAULT_REGION=us-west-1  ; export ec2_ami="ami-a9a8e4c9"    # us-west-1
 # export AWS_DEFAULT_REGION=us-west-2  ; export ec2_ami="ami-746aba14"    # us-west-2
 # ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20160907 ( ebs | hvm )
