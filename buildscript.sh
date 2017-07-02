@@ -5,6 +5,8 @@
 #
 
 # jorgedlt@gmail.com - 03 MAR 2017
+# additional documentation
+# see - https://docs.google.com/document/d/1RdN2hbPeSvrCDTa76iZyExmVhF-Ct9iv-TcFNMRZwSU/edit
 
 #
 # export AWS_ACCESS_KEY_ID=
@@ -30,83 +32,84 @@ export ec2_type="t2.medium"
 
 echo -n "create AWS-VPC "
 # aws ec2 create-vpc --cidr-block 10.17.0.0/16
-VpcId=$(aws ec2 create-vpc --cidr-block "${vpc_cidr}" | grep VpcId | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources "${VpcId}" --tags Key=Name,Value="${vpc_stack}"
+VpcId=$(aws ec2 create-vpc --cidr-block ${vpc_cidr} | grep VpcId | cut -d':' -f2 | tr -d '"| |,')
+ aws ec2 create-tags --resources ${VpcId} --tags Key=Name,Value="${vpc_stack}"
 
-echo "${VpcId}"
+echo "${VpcId}" | tee -a ${VpcId}-build.log
 
-# this needs a stop if failed scheme !!
+date | tee -a ${VpcId}-build.log
 
-aws ec2 describe-vpcs > "${VpcId}-build.log"
+#aws ec2 describe-vpcs | jq .
+aws ec2 describe-vpcs >> ${VpcId}-build.log
 
-echo modify-vpc-attribute dns attributes
+echo "Modify-VOC attribute DNS attributes"
  aws ec2 modify-vpc-attribute --vpc-id "${VpcId}" --enable-dns-support "{\"Value\":true}"
  aws ec2 modify-vpc-attribute --vpc-id "${VpcId}" --enable-dns-hostnames "{\"Value\":true}"
 
 echo -n "Create PUBLIC subnet "
- publicSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block "${pub_cidr}" | grep 'SubnetId' | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources "${publicSubnet}" --tags Key=Name,Value=publicSubnet-${vpc_stack}
+ publicSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block ${pub_cidr} | grep SubnetId | cut -d':' -f2 | tr -d '"| |,')
+ aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value=publicSubnet-${vpc_stack}
 
-echo publicSubnet "${publicSubnet}"
+echo publicSubnet ${publicSubnet} | tee -a ${VpcId}-build.log
 
-echo Select Availability Zone
- AvailabilityZone=$(aws ec2 describe-subnets --subnet-ids "${publicSubnet}" | grep AvailabilityZone | cut -d':' -f2 | tr -d '"| |,')
+echo "Select Availability Zone" | tee -a ${VpcId}-build.log
+ AvailabilityZone=$(aws ec2 describe-subnets --subnet-ids ${publicSubnet} | grep AvailabilityZone | cut -d':' -f2 | tr -d '"| |,')
 
 echo -n "Create PRIVATE subnet "
  privateSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block "${prv_cidr}" | grep 'SubnetId' | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Name,Value=privateSubnet-${vpc_stack}
 
-echo privateSubnet "${privateSubnet}"
+echo ${privateSubnet} | tee -a ${VpcId}-build.log
 
- aws ec2 describe-subnets >> "${VpcId}-build.log"
+ aws ec2 describe-subnets >> ${VpcId}-build.log
 
-echo Create Internet Gateway
- InternetGatewayId=$(aws ec2 create-internet-gateway | grep 'InternetGatewayId' | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources "${InternetGatewayId}" --tags Key=Name,Value=InternetGateway-${vpc_stack}
+echo Create Internet Gateway | tee ${VpcId}-build.log
+ InternetGatewayId=$(aws ec2 create-internet-gateway | grep InternetGatewayId | cut -d':' -f2 | tr -d '"| |,')
+ aws ec2 create-tags --resources ${InternetGatewayId} --tags Key=Name,Value=InternetGateway-${vpc_stack}
 
- aws ec2 describe-internet-gateways >> "${VpcId}-build.log"
+echo Attach Gateway | tee -a ${VpcId}-build.log
+ aws ec2 attach-internet-gateway --vpc-id ${VpcId} --internet-gateway-id ${InternetGatewayId}
 
-echo Attach Gateway
- aws ec2 attach-internet-gateway --vpc-id "${VpcId}" --internet-gateway-id ${InternetGatewayId}
+echo Create Route Table | tee -a ${VpcId}-build.log
+ RouteTableId=$(aws ec2 create-route-table --vpc-id "${VpcId}" | grep RouteTableId | cut -d':' -f2 | tr -d '"| |,')
+ aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=RouteTable-${vpc_stack}
 
-echo Create Route Table
- RouteTableId=$(aws ec2 create-route-table --vpc-id "${VpcId}" | grep 'RouteTableId' | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources "${RouteTableId}" --tags Key=Name,Value=RouteTable-${vpc_stack}
-
-echo Create Routes
+echo Create Routes | tee -a ${VpcId}-build.log
  aws ec2 create-route --route-table-id "${RouteTableId}" --destination-cidr-block 0.0.0.0/0 --gateway-id "${InternetGatewayId}"
- aws ec2 create-tags --resources "${RouteTableId}" --tags Key=Name,Value=Route-${vpc_stack}
+ aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=Route-${vpc_stack}
 
- aws ec2 describe-route-tables >> "${VpcId}-build.log"
+ aws ec2 describe-route-tables >> ${VpcId}-build.log
 
-echo Route Associations
- aws ec2 associate-route-table --subnet-id "${publicSubnet}" --route-table-id "${RouteTableId}"
+echo Route Associations | tee -a ${VpcId}-build.log
+ aws ec2 associate-route-table --subnet-id ${publicSubnet} --route-table-id ${RouteTableId} >> ${VpcId}-build.log
 
 # optionally - an instance launched into the subnet automatically receives a public IP address
 # aws ec2 modify-subnet-attribute --subnet-id ${publicSubnet} --map-public-ip-on-launch
-
 # research how to bind ElasticIP at launch
 
-echo Create Securitygroup
- securitygroup=$(aws ec2 create-security-group --group-name "SSHAccess_${vpc_stack}" --description "Security group for SSH access" --vpc-id ${VpcId} | grep 'GroupId' | cut -d':' -f2 | tr -d '"| |,' )
+echo Create Securitygroup | tee -a ${VpcId}-build.log
+ securitygroup=$(aws ec2 create-security-group --group-name "SSHAccess_${vpc_stack}" --description "Security group for SSH access" --vpc-id ${VpcId} | grep GroupId | cut -d':' -f2 | tr -d '"| |,' )
 
- # aws ec2 describe-security-groups --group-id ${securitygroup} | jq
+aws ec2 describe-security-groups --group-id ${securitygroup} >> ${VpcId}-build.log
 
-echo Securitygroup Values
- aws ec2 authorize-security-group-ingress --group-id "${securitygroup}" --protocol 'tcp' --port '22' --cidr '98.251.81.179/32'
+echo SecurityGroup Values | tee -a ${VpcId}-build.log
+ aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "98.251.81.179/32" # DLT Home
+ aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32" # DLT Work
 
-#
- aws ec2 create-tags --resources "${publicSubnet}" --tags Key=Name,Value="${vpc_stack}-Public"
- aws ec2 create-tags --resources "${publicSubnet}" --tags Key=Stack,Value="${vpc_stack}"
  #
- aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Name,Value="${vpc_stack}-Private"
- aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Stack,Value="${vpc_stack}"
+ aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value="${vpc_stack}-Public"
+ aws ec2 create-tags --resources ${publicSubnet} --tags Key=Stack,Value="${vpc_stack}"
+ #
+ aws ec2 create-tags --resources ${privateSubnet} --tags Key=Name,Value="${vpc_stack}-Private"
+ aws ec2 create-tags --resources ${privateSubnet} --tags Key=Stack,Value="${vpc_stack}"
 
- aws ec2 describe-security-groups --group-ids "${securitygroup}" >> "${VpcId}-build.log"
+ aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
 
 sleep 10
-#
-InstanceId=$( aws ec2 run-instances \
+# Public EC2
+echo Create EC2-Public | tee -a ${VpcId}.public-build.log
+
+InstancePu=$(aws ec2 run-instances \
   --count 1 \
   --image-id ${ec2_ami} \
   --instance-type ${ec2_type} \
@@ -115,18 +118,34 @@ InstanceId=$( aws ec2 run-instances \
   --subnet-id ${publicSubnet} \
   --associate-public-ip-address \
   --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
-  --placement AvailabilityZone=${AvailabilityZone} \
-  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ')
+  --placement AvailabilityZone=${AvailabilityZone} | tee -a ${VpcId}.public-build.log \
+ | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
 
 # work out how the sg has AvailabilityZone
 
-aws ec2 create-tags --resources "${InstanceId}" --tags Key=Name,Value=${vpc_stack}${ec2_series}-01
+aws ec2 create-tags --resources ${InstancePu} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Public
 
-aws ec2 describe-instances --instance-ids >> "${VpcId}-build.log"
+# see nat-gateway notes
+echo Create EC2-Public | tee -a ${VpcId}.private-build.log
+# Private EC2
+InstancePr=$(aws ec2 run-instances \
+  --count 1 \
+  --image-id ${ec2_ami} \
+  --instance-type ${ec2_type} \
+  --key-name ${ec2_keyname} \
+  --security-group-ids ${securitygroup} \
+  --subnet-id ${privateSubnet} \
+  --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
+  --placement AvailabilityZone=${AvailabilityZone} | tee ${VpcId}.private-build.log \
+ | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
+
+# work out how the sg has AvailabilityZone
+
+aws ec2 create-tags --resources ${InstancePr} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Private
 
 # also list ssh commmand here
 # ssh -i ~/.aws/cf-test-jdlt.pem ubuntu@52.14.137.223
+# ssh -i ~/.aws/devops-west2-jdlt.pem ubuntu@52.14.137.223
 
 exit
-
 # add Additinal EC2 Resources here
