@@ -25,7 +25,7 @@ export prv_cidr="10.27.1.0/24"
 export ec2_stack="breakup"
 
 # for Test I used SBD-DA AWS Account - us-east-2
-export ec2_keyname="sbdda-autodeploy-use2.pem"                              # us-east-2
+export ec2_keyname="sbdda-autodeploy-use2"                              # us-east-2
 #
 
 # t2.micro | t2.small | t2.medium | t2.large #
@@ -57,7 +57,7 @@ echo publicSubnet ${publicSubnet} >> ${VpcId}-build.log
 echo "Select Availability Zone" >> ${VpcId}-build.log
  AvailabilityZone=$(aws ec2 describe-subnets --subnet-ids ${publicSubnet} | grep AvailabilityZone | cut -d':' -f2 | tr -d '"| |,')
 
-echo -n "Create PRIVATE subnet "
+echo "Create PRIVATE subnet "
  privateSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block "${prv_cidr}" | grep 'SubnetId' | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Name,Value=privateSubnet-${vpc_stack}
 
@@ -108,17 +108,16 @@ echo SecurityGroup Values >> ${VpcId}-build.log
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
 
+###
 
- exit
+: " the ec2 builds are failing becuase the keys are beneath the root, therefore the key
+ need to be on par with my current root horiz
 
- the ec2 builds are failing becuase the keys are beneath the root, therefore the key
- need to be on par with my current
+ 1 - is generate and delate as needed.
+ 2 - is pre create and ignore to github
+ the real solution lies in the ( GetEnv-AWS.sh ) Environment harverst script"
 
- one - is generate and delate as needed.
-
- two - is pre create and ignore to github
-
- the real solution lies in the ( GetEnv-AWS.sh ) Environment harverst script
+###
 
 sleep 10
 # Public EC2
@@ -133,10 +132,11 @@ InstancePu=$(aws ec2 run-instances \
   --subnet-id ${publicSubnet} \
   --associate-public-ip-address \
   --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
-  --user-data file://ec2configs/public-ec2-build.sh \
   --placement AvailabilityZone=${AvailabilityZone} >> ${VpcId}.public-build.log \
  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
 
+
+#   --user-data file://ec2configs/public-ec2-build.sh \
 # work out how the sg has AvailabilityZone
 
 aws ec2 create-tags --resources ${InstancePu} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Public
@@ -154,11 +154,11 @@ InstancePr=$(aws ec2 run-instances \
   --security-group-ids ${securitygroup} \
   --subnet-id ${privateSubnet} \
   --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
-  --user-data file://ec2configs/private-ec2-build.sh \
   --placement AvailabilityZone=${AvailabilityZone} >> ${VpcId}.private-build.log \
  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
 
 # work out how the sg has AvailabilityZone
+#   --user-data file://ec2configs/private-ec2-build.sh \
 
 aws ec2 create-tags --resources ${InstancePr} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Private
 
