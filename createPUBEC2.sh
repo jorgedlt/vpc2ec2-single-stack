@@ -8,7 +8,6 @@
 # additional private documentation
 # see - https://docs.google.com/document/d/1RdN2hbPeSvrCDTa76iZyExmVhF-Ct9iv-TcFNMRZwSU/edit
 
-
 # Load ENV parameters
 source ./createCFG.env
 
@@ -29,8 +28,6 @@ InstancePub=$(aws ec2 run-instances --count 1 \
  --user-data file://ec2configs/public-ec2-build.sh \
  --placement AvailabilityZone="${AvailabilityZone}" \
   | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
-
-#  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| '
 
 #   --user-data file://ec2configs/public-ec2-build.sh \
 # work out how the sg has AvailabilityZone

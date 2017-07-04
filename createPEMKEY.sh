@@ -8,7 +8,6 @@
 # additional private documentation
 # see - https://docs.google.com/document/d/1RdN2hbPeSvrCDTa76iZyExmVhF-Ct9iv-TcFNMRZwSU/edit
 
-
 # Load ENV parameters
 source ./createCFG.env
 
