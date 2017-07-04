@@ -12,19 +12,9 @@ source ./createCFG.env
 
 echo "Create PUBLIC subnet"
 
-# debug block
-echo ${CYAN} ' '
-echo "  VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
+#debug block
+  ./showENV.sh
 #
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
-#
-echo "  PUBnet ${PUBnet}"
-echo "  PRVnet ${PRVnet}"
-#
-echo "build_CFG ${build_CFG}"
-echo ${RESET} ' '
 
 #
  publicSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block ${PUB_cidr} | grep SubnetId | cut -d':' -f2 | tr -d '"| |,')

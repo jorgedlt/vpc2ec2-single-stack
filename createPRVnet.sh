@@ -13,30 +13,10 @@ source ./createCFG.env
 
 echo "Create PRIVATE subnet "
 
-echo "Create Internet Gateway"
+#debug block
+  ./showENV.sh
+#
 
-# debug block
-echo ${CYAN} ' '
-echo "  VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
-#
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
-#
-echo "  PUBnet ${PUBnet}"
-echo "  PRVnet ${PRVnet}"
-#
-echo "  AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
-echo "  AvailabilityZone ${AvailabilityZone}"
-
-echo "  ec2_ami ${ec2_ami}"
-echo "  EC2_stack ${EC2_stack}"
-echo "  EC2_type ${EC2_type}"
-
-# for Test I used SBD-DA AWS Account - us-east-2
-# export ec2_keyname="sbdda-autodeploy-B1"                                 # us-east-2
-#
-echo ${RESET} ' '
 #
  privateSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block "${PRV_cidr}" | grep 'SubnetId' | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Name,Value=privateSubnet-${VPC_stack}

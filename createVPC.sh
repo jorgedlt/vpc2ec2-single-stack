@@ -14,16 +14,9 @@ source ./createCFG.env
 
 echo "create AWS-VPC"
 
-# debug block
-echo ${CYAN} ' '
-echo "  VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
+#debug block
+  ./showENV.sh
 #
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
-#
-echo "build_CFG ${build_CFG}"
-echo ${RESET} ' '
 
 # aws ec2 create-vpc
 VpcId=$(aws ec2 create-vpc --cidr-block ${VPC_cidr} | grep VpcId | cut -d':' -f2 | tr -d '"| |,')

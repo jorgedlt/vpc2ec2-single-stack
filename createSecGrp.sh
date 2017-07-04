@@ -13,32 +13,9 @@ source ./createCFG.env
 
 echo "Create Securitygroup"
 
-# debug block
-echo ${CYAN} ' '
-echo "  VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
+#debug block
+  ./showENV.sh
 #
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
-#
-echo "  PUBnet ${PUBnet}"
-echo "  PRVnet ${PRVnet}"
-#
-echo "AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
-echo "  AvailabilityZone ${AvailabilityZone}"
-
-echo "  SGssh ${SGssh}"
-echo "  ec2_keyname ${ec2_keyname}"
-
-echo "  ec2_ami ${ec2_ami}"
-echo "  EC2_stack ${EC2_stack}"
-echo "  EC2_type ${EC2_type}"
-
-# for Test I used SBD-DA AWS Account - us-east-2
-# export ec2_keyname="sbdda-autodeploy-B1"                                 # us-east-2
-#
-echo ${RESET} ' '
-
 
 echo Create Securitygroup >> ${VpcId}-build.log
  securitygroup=$(aws ec2 create-security-group --group-name "SSHAccess_${VPC_stack}" --description "Security group for SSH access" --vpc-id ${VpcId} | grep GroupId | cut -d':' -f2 | tr -d '"| |,' )
