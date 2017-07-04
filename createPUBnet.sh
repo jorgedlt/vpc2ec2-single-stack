@@ -20,8 +20,8 @@ echo "  VPCstack ${VPC_stack}"
 echo "  PUBcidr ${PUB_cidr}"
 echo "  PRVcidr ${PRV_cidr}"
 #
-echo "  PUBnet ${PUB_cidr}"
-echo "  PRVnet ${PRV_cidr}"
+echo "  PUBnet ${PUBnet}"
+echo "  PRVnet ${PRVnet}"
 #
 echo "build_CFG ${build_CFG}"
 echo ${RESET} ' '
@@ -37,5 +37,8 @@ echo "export PUBnet=${publicSubnet}" >> ${build_CFG}
 
 echo "Select Availability Zone" >> ${VpcId}-build.log
  AvailabilityZone=$(aws ec2 describe-subnets --subnet-ids ${publicSubnet} | grep AvailabilityZone | cut -d':' -f2 | tr -d '"| |,')
+
+ echo "export AvailabilityZone=${AvailabilityZone}" >> ${build_CFG}
+
 
 # fin 0

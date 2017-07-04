@@ -21,10 +21,24 @@ echo "  VPCstack ${VPC_stack}"
 echo "  PUBcidr ${PUB_cidr}"
 echo "  PRVcidr ${PRV_cidr}"
 #
-echo "  PUBnet ${PUB_cidr}"
-echo "  PRVnet ${PRV_cidr}"
+echo "  PUBnet ${PUBnet}"
+echo "  PRVnet ${PRVnet}"
 #
-echo "build_CFG ${build_CFG}"
+echo "  build_CFG ${build_CFG}"
+echo "AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
+
+echo "  AvailabilityZone ${AvailabilityZone}"
+
+echo "  SGssh ${SGssh}"
+echo "  ec2_keyname ${ec2_keyname}"
+
+echo "  ec2_ami ${ec2_ami}"
+echo "  EC2_stack ${EC2_stack}"
+echo "  EC2_type ${EC2_type}"
+
+# for Test I used SBD-DA AWS Account - us-east-2
+# export ec2_keyname="sbdda-autodeploy-B1"                                 # us-east-2
+#
 echo ${RESET} ' '
 
 
@@ -40,11 +54,17 @@ echo SecurityGroup Values >> ${VpcId}-build.log
  #
  aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value="${VPC_stack}-Public"
  aws ec2 create-tags --resources ${publicSubnet} --tags Key=Stack,Value="${VPC_stack}"
+
+# build_CFG
+echo "export SGssh=${securitygroup}" >> ${build_CFG}
+
  #
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Name,Value="${VPC_stack}-Private"
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Stack,Value="${VPC_stack}"
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
+
+
 
 # this is where I stopped - this works but need to describe to the log, and update the CFG file with new ENV
 

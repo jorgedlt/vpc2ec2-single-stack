@@ -22,6 +22,12 @@ source ./createIGW.sh
 # Security Groups
 source ./createSecGrp.sh
 
+# PEM pair
+source ./createPEMKEY.sh
+
+# PUB EC2
+source ./createPUBEC2.sh
+
 # add more as ready
 # ...
 

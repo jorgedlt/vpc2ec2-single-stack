@@ -12,7 +12,7 @@
 # Load ENV parameters
 source ./createCFG.env
 
-echo "Create EC2-Public"
+echo "Create Key Pair"
 
 # debug block
 echo ${CYAN} ' '
@@ -25,7 +25,8 @@ echo "  PRVcidr ${PRV_cidr}"
 echo "  PUBnet ${PUBnet}"
 echo "  PRVnet ${PRVnet}"
 #
-echo "  AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
+echo "build_CFG ${build_CFG}"
+echo "AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
 
 echo "  AvailabilityZone ${AvailabilityZone}"
 
@@ -42,25 +43,25 @@ echo "  EC2_type ${EC2_type}"
 echo ${RESET} ' '
 
 #
-sleep 5
-# Public EC2
-#echo "Create EC2-Public"
-#InstancePu=$(aws ec2 run-instances \
+export myACCOUNT=$(aws iam list-account-aliases | tr -d '{|}|[|]|"| |-' | egrep -v ':|^$');
+export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{|}|[|]|"| |-' );
 
-aws ec2 run-instances \
-  --count 1 \
-  --image-id ${ec2_ami} \
-  --instance-type ${ec2_type} \
-  --key-name ${ec2_keyname} \
-  --security-group-ids ${SGssh} \
-  --subnet-id ${PUBnet} \
-  --associate-public-ip-address \
-  --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
-  --placement AvailabilityZone=${AvailabilityZone} \
-  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| '
+#
 
+# the vpc2ec2 script needs a way to create new key pairs which are unique to the series
 
-#   --user-data file://ec2configs/public-ec2-build.sh \
-# work out how the sg has AvailabilityZone
+# create-key-pairs
+export MyKEY=$(aws ec2 create-key-pair --key-name ${myACCOUNT}-${myREGION}-${VpcId} \
+  | grep KeyMaterial | cut -d':' -f2 | tr -d ',|"| |')
+#
+echo -e ${MyKEY} > ${myACCOUNT}-${myREGION}-${VpcId}.pem
+export ec2_keyname=${myACCOUNT}-${myREGION}-${VpcId}.pem
+# chmod 0400 ${myPEM}w
+#
 
-aws ec2 create-tags --resources ${InstancePu} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Public
+echo "export ec2_keyname=${myACCOUNT}-${myREGION}-${VpcId}" >> ${build_CFG}
+
+# delete-key-pairs
+# aws ec2 delete-key-pair --key-name  sbdda-useast2-vpc-2d473744
+# rm ${myPEM}
+#
