@@ -22,8 +22,6 @@ echo "create AWS-VPC"
 VpcId=$(aws ec2 create-vpc --cidr-block ${VPC_cidr} | grep VpcId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${VpcId} --tags Key=Name,Value="${VPC_stack}"
 
-echo "export VpcId=${VpcId}" >> ${build_CFG}
-
 date             > ${VpcId}-build.log
 echo "${VpcId}" >> ${VpcId}-build.log
 aws ec2 describe-vpcs >> ${VpcId}-build.log
@@ -31,6 +29,9 @@ aws ec2 describe-vpcs >> ${VpcId}-build.log
 echo "Modify-VOC attribute DNS attributes"
  aws ec2 modify-vpc-attribute --vpc-id "${VpcId}" --enable-dns-support "{\"Value\":true}"
  aws ec2 modify-vpc-attribute --vpc-id "${VpcId}" --enable-dns-hostnames "{\"Value\":true}"
+
+# update creatCFG file
+  echo "export VpcId=${VpcId}" >> ${build_CFG}
 
 # fin 0;
 

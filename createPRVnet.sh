@@ -24,6 +24,7 @@ echo "Create PRIVATE subnet "
 echo ${privateSubnet} >> ${VpcId}-build.log
 aws ec2 describe-subnets --subnet-ids ${privateSubnet} >> ${VpcId}-build.log
 
+# update creatCFG file
 echo "export PRVnet=${privateSubnet}" >> ${build_CFG}
 
 # no Select Availability Zone -- not sure why ??

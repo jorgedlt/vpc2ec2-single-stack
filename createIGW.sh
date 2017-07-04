@@ -14,24 +14,16 @@ source ./createCFG.env
 
 echo "Create Internet Gateway"
 
-# debug block
-echo ${CYAN} ' '
-echo "     VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
+#debug block
+  ./showENV.sh
 #
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
-#
-echo "  PUBnet ${PUB_cidr}"
-echo "  PRVnet ${PRV_cidr}"
-#
-echo "build_CFG ${build_CFG}"
-echo ${RESET} ' '
 
 #
 echo Create Internet Gateway >> ${VpcId}-build.log
  InternetGatewayId=$(aws ec2 create-internet-gateway | grep InternetGatewayId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${InternetGatewayId} --tags Key=Name,Value=InternetGateway-${vpc_stack}
+
+# update CFG with InternetGatewayId
 
 echo Attach Gateway >> ${VpcId}-build.log
  aws ec2 attach-internet-gateway --vpc-id ${VpcId} --internet-gateway-id ${InternetGatewayId}
@@ -39,6 +31,8 @@ echo Attach Gateway >> ${VpcId}-build.log
 echo Create Route Table >> ${VpcId}-build.log
  RouteTableId=$(aws ec2 create-route-table --vpc-id "${VpcId}" | grep RouteTableId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=RouteTable-${VPC_stack}
+
+ # update CFG with RouteTableId
 
 echo Create Routes >> ${VpcId}-build.log
  aws ec2 create-route --route-table-id "${RouteTableId}" --destination-cidr-block 0.0.0.0/0 --gateway-id "${InternetGatewayId}"

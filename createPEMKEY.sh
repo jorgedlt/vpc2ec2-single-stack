@@ -22,17 +22,18 @@ export myACCOUNT=$(aws iam list-account-aliases | tr -d '{|}|[|]|"| |-' | egrep 
 export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{|}|[|]|"| |-' );
 
 # create-key-pairs
-export MyKEY=$(aws ec2 create-key-pair --key-name ${myACCOUNT}-${myREGION}-${VpcId} \
-  | grep KeyMaterial | cut -d':' -f2 | tr -d ',|"| |')
-#
-echo -e ${MyKEY} > ${myACCOUNT}-${myREGION}-${VpcId}.pem
+aws ec2 create-key-pair \
+ --region ${AWS_DEFAULT_REGION} \
+ --key-name "${myACCOUNT}-${myREGION}-${VpcId}" \
+ | jq -r ".KeyMaterial" > ./${myACCOUNT}-${myREGION}-${VpcId}.pem
 
-echo "export ec2_keyname=${myACCOUNT}-${myREGION}-${VpcId}" >> ${build_CFG}
+#  | grep KeyMaterial | cut -d':' -f2 | tr -d ',|"| |')
+# echo -e ${MyKEY} > ${myACCOUNT}-${myREGION}-${VpcId}.pem
+
+# update creatCFG file
+echo "export EC2_keyname=${myACCOUNT}-${myREGION}-${VpcId}" >> ${build_CFG}
 
 #
-aws ec2 describe-key-pairs
-aws ec2 delete-key-pair --key-name
-#
-# delete-key-pairs
+# aws ec2 describe-key-pairs
 # aws ec2 delete-key-pair --key-name
 #

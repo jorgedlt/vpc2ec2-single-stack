@@ -1,13 +1,13 @@
-Tue Jul  4 11:48:10 EDT 2017
-vpc-89f282e0
+Tue Jul  4 13:06:56 EDT 2017
+vpc-69fa8a00
 {
     "Vpcs": [
         {
-            "VpcId": "vpc-89f282e0", 
+            "VpcId": "vpc-69fa8a00", 
             "InstanceTenancy": "default", 
             "Tags": [
                 {
-                    "Value": "vpc-B4", 
+                    "Value": "vpc-B5", 
                     "Key": "Name"
                 }
             ], 
@@ -26,14 +26,14 @@ vpc-89f282e0
         }
     ]
 }
-publicSubnet subnet-3ba47776
+publicSubnet subnet-e8014081
 {
     "Subnets": [
         {
-            "VpcId": "vpc-89f282e0", 
+            "VpcId": "vpc-69fa8a00", 
             "Tags": [
                 {
-                    "Value": "publicSubnet-vpc-B4", 
+                    "Value": "publicSubnet-vpc-B5", 
                     "Key": "Name"
                 }
             ], 
@@ -41,21 +41,21 @@ publicSubnet subnet-3ba47776
             "MapPublicIpOnLaunch": false, 
             "DefaultForAz": false, 
             "State": "available", 
-            "AvailabilityZone": "us-east-2c", 
-            "SubnetId": "subnet-3ba47776", 
+            "AvailabilityZone": "us-east-2a", 
+            "SubnetId": "subnet-e8014081", 
             "AvailableIpAddressCount": 251
         }
     ]
 }
 Select Availability Zone
-subnet-71ab783c
+subnet-43f8be2a
 {
     "Subnets": [
         {
-            "VpcId": "vpc-89f282e0", 
+            "VpcId": "vpc-69fa8a00", 
             "Tags": [
                 {
-                    "Value": "privateSubnet-vpc-B4", 
+                    "Value": "privateSubnet-vpc-B5", 
                     "Key": "Name"
                 }
             ], 
@@ -63,8 +63,8 @@ subnet-71ab783c
             "MapPublicIpOnLaunch": false, 
             "DefaultForAz": false, 
             "State": "available", 
-            "AvailabilityZone": "us-east-2c", 
-            "SubnetId": "subnet-71ab783c", 
+            "AvailabilityZone": "us-east-2a", 
+            "SubnetId": "subnet-43f8be2a", 
             "AvailableIpAddressCount": 251
         }
     ]
@@ -78,13 +78,13 @@ Create Routes
         {
             "Associations": [
                 {
-                    "RouteTableAssociationId": "rtbassoc-ff96af96", 
+                    "RouteTableAssociationId": "rtbassoc-8980b9e0", 
                     "Main": true, 
-                    "RouteTableId": "rtb-41b7f528"
+                    "RouteTableId": "rtb-dabdffb3"
                 }
             ], 
-            "RouteTableId": "rtb-41b7f528", 
-            "VpcId": "vpc-89f282e0", 
+            "RouteTableId": "rtb-dabdffb3", 
+            "VpcId": "vpc-69fa8a00", 
             "PropagatingVgws": [], 
             "Tags": [], 
             "Routes": [
@@ -98,12 +98,12 @@ Create Routes
         }, 
         {
             "Associations": [], 
-            "RouteTableId": "rtb-e7b0f28e", 
-            "VpcId": "vpc-89f282e0", 
+            "RouteTableId": "rtb-d2befcbb", 
+            "VpcId": "vpc-69fa8a00", 
             "PropagatingVgws": [], 
             "Tags": [
                 {
-                    "Value": "Route-vpc-B4", 
+                    "Value": "Route-vpc-B5", 
                     "Key": "Name"
                 }
             ], 
@@ -115,7 +115,7 @@ Create Routes
                     "Origin": "CreateRouteTable"
                 }, 
                 {
-                    "GatewayId": "igw-7569e01c", 
+                    "GatewayId": "igw-926ce5fb", 
                     "DestinationCidrBlock": "0.0.0.0/0", 
                     "State": "active", 
                     "Origin": "CreateRoute"
@@ -153,7 +153,7 @@ Create Routes
 }
 Route Associations
 {
-    "AssociationId": "rtbassoc-5b96af32"
+    "AssociationId": "rtbassoc-f983ba90"
 }
 Create Securitygroup
 {
@@ -173,10 +173,10 @@ Create Securitygroup
             ], 
             "Description": "Security group for SSH access", 
             "IpPermissions": [], 
-            "GroupName": "SSHAccess_vpc-B4", 
-            "VpcId": "vpc-89f282e0", 
+            "GroupName": "SSHAccess_vpc-B5", 
+            "VpcId": "vpc-69fa8a00", 
             "OwnerId": "674553401808", 
-            "GroupId": "sg-deccc6b7"
+            "GroupId": "sg-35d3d95c"
         }
     ]
 }
@@ -211,10 +211,10 @@ SecurityGroup Values
                     "UserIdGroupPairs": []
                 }
             ], 
-            "GroupName": "SSHAccess_vpc-B4", 
-            "VpcId": "vpc-89f282e0", 
+            "GroupName": "SSHAccess_vpc-B5", 
+            "VpcId": "vpc-69fa8a00", 
             "OwnerId": "674553401808", 
-            "GroupId": "sg-deccc6b7"
+            "GroupId": "sg-35d3d95c"
         }
     ]
 }

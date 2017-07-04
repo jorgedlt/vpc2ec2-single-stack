@@ -4,28 +4,29 @@
 source ./createCFG.env
 
 # debug block
-echo ${CYAN}
-
-echo "  VPCid ${VpcId}"
-echo "  VPCstack ${VPC_stack}"
+echo
 #
-echo "  PUBcidr ${PUB_cidr}"
-echo "  PRVcidr ${PRV_cidr}"
+export myACCOUNT=$(aws iam list-account-aliases | tr -d '{|}|[|]|"| |-' | egrep -v ':|^$');
+export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{|}|[|]|"| |-' );
 #
-echo "  PUBnet ${PUBnet}"
-echo "  PRVnet ${PRVnet}"
-#
-echo "  build_CFG ${build_CFG}"
-echo "  AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
-
-echo "  AvailabilityZone ${AvailabilityZone}"
-
-echo "  SGssh ${SGssh}"
-echo "  EC2_keyname ${EC2_keyname}"
-
-echo "  EC2_ami ${EC2_ami}"
-echo "  EC2_stack ${EC2_stack}"
-echo "  EC2_type ${EC2_type}"
-
+ echo "${CYAN}  ACCOUNT            :${WHITE} ${myACCOUNT}"
+ echo "${CYAN}  REGION             :${WHITE} ${myREGION}"
+ echo
+ echo "${CYAN}  build_CFG file     :${GREEN} ${build_CFG}"
+ echo "${CYAN}  VPCid              :${YELLOW} ${VpcId}"
+ echo "${CYAN}  VPC_stack          :${YELLOW} ${VPC_stack}"
+ echo "${CYAN}  EC2_stack          :${YELLOW} ${EC2_stack}"
+ echo
+ echo "${CYAN}  PUBcidr            :${GREEN} ${PUB_cidr}"
+ echo "${CYAN}  PRVcidr            :${GREEN} ${PRV_cidr}"
+ echo "${CYAN}  PUBnet             :${YELLOW} ${PUBnet}"
+ echo "${CYAN}  PRVnet             :${YELLOW} ${PRVnet}"
+ echo
+ echo "${CYAN}  AWS_DEFAULT_REGION :${GREEN} ${AWS_DEFAULT_REGION}"
+ echo "${CYAN}  AvailabilityZone   :${YELLOW} ${AvailabilityZone}"
+ echo "${CYAN}  SGssh              :${YELLOW} ${SGssh}"
+ echo "${CYAN}  EC2_ami            :${GREEN} ${EC2_ami}"
+ echo "${CYAN}  EC2_type           :${GREEN} ${EC2_type}"
+ echo "${CYAN}  EC2_keyname        :${YELLOW} ${EC2_keyname}"
 #
 echo ${RESET}

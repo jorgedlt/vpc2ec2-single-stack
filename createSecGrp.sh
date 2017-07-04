@@ -30,8 +30,8 @@ echo SecurityGroup Values >> ${VpcId}-build.log
  aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value="${VPC_stack}-Public"
  aws ec2 create-tags --resources ${publicSubnet} --tags Key=Stack,Value="${VPC_stack}"
 
-# build_CFG
-echo "export SGssh=${securitygroup}" >> ${build_CFG}
+# update creatCFG file
+  echo "export SGssh=${securitygroup}" >> ${build_CFG}
 
  #
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Name,Value="${VPC_stack}-Private"
