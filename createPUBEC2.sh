@@ -16,7 +16,7 @@ echo "Create EC2-Public"
 
 # debug block
 echo ${CYAN} ' '
-echo "     VPCid ${VpcId}"
+echo "  VPCid ${VpcId}"
 echo "  VPCstack ${VPC_stack}"
 #
 echo "  PUBcidr ${PUB_cidr}"
@@ -36,31 +36,15 @@ echo "  ec2_ami ${ec2_ami}"
 echo "  EC2_stack ${EC2_stack}"
 echo "  EC2_type ${EC2_type}"
 
-# for Test I used SBD-DA AWS Account - us-east-2
-# export ec2_keyname="sbdda-autodeploy-B1"                                 # us-east-2
-#
 echo ${RESET} ' '
 
 #
-sleep 5
-# Public EC2
-#echo "Create EC2-Public"
-#InstancePu=$(aws ec2 run-instances \
 
-aws ec2 run-instances \
-  --count 1 \
-  --image-id ${ec2_ami} \
-  --instance-type ${ec2_type} \
-  --key-name ${ec2_keyname} \
-  --security-group-ids ${SGssh} \
-  --subnet-id ${PUBnet} \
-  --associate-public-ip-address \
-  --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
-  --placement AvailabilityZone=${AvailabilityZone} \
-  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| '
+aws ec2 run-instances --count 1 --image-id "${ec2_ami}" --instance-type "${ec2_type}" --key-name "${ec2_keyname}" --security-group-ids "${SGssh}" --subnet-id "${PUBnet}" --associate-public-ip-address --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" --user-data file://ec2configs/public-ec2-build.sh --placement AvailabilityZone="${AvailabilityZone}"
 
+#  | grep InstanceId | cut -d':' -f2 | tr -d '"|,| '
 
 #   --user-data file://ec2configs/public-ec2-build.sh \
 # work out how the sg has AvailabilityZone
 
-aws ec2 create-tags --resources ${InstancePu} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Public
+# aws ec2 create-tags --resources ${InstancePu} --tags Key=Name,Value=${vpc_stack}-${ec2_series}Public

@@ -15,7 +15,7 @@ echo "Create Securitygroup"
 
 # debug block
 echo ${CYAN} ' '
-echo "     VPCid ${VpcId}"
+echo "  VPCid ${VpcId}"
 echo "  VPCstack ${VPC_stack}"
 #
 echo "  PUBcidr ${PUB_cidr}"
@@ -24,9 +24,7 @@ echo "  PRVcidr ${PRV_cidr}"
 echo "  PUBnet ${PUBnet}"
 echo "  PRVnet ${PRVnet}"
 #
-echo "  build_CFG ${build_CFG}"
 echo "AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}"
-
 echo "  AvailabilityZone ${AvailabilityZone}"
 
 echo "  SGssh ${SGssh}"
@@ -49,7 +47,7 @@ aws ec2 describe-security-groups --group-id ${securitygroup} >> ${VpcId}-build.l
 
 echo SecurityGroup Values >> ${VpcId}-build.log
  aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "98.251.81.179/32" # DLT Home
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32" # DLT Work
+ # aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32" # DLT Work
 
  #
  aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value="${VPC_stack}-Public"
@@ -63,9 +61,5 @@ echo "export SGssh=${securitygroup}" >> ${build_CFG}
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Stack,Value="${VPC_stack}"
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
-
-
-
-# this is where I stopped - this works but need to describe to the log, and update the CFG file with new ENV
 
 # fin 0

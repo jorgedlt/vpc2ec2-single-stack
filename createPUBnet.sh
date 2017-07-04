@@ -14,7 +14,7 @@ echo "Create PUBLIC subnet"
 
 # debug block
 echo ${CYAN} ' '
-echo "     VPCid ${VpcId}"
+echo "  VPCid ${VpcId}"
 echo "  VPCstack ${VPC_stack}"
 #
 echo "  PUBcidr ${PUB_cidr}"

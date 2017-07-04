@@ -16,14 +16,11 @@ echo "create AWS-VPC"
 
 # debug block
 echo ${CYAN} ' '
-echo "     VPCid ${VpcId}"
+echo "  VPCid ${VpcId}"
 echo "  VPCstack ${VPC_stack}"
 #
 echo "  PUBcidr ${PUB_cidr}"
 echo "  PRVcidr ${PRV_cidr}"
-#
-echo "  PUBnet ${PUB_cidr}"
-echo "  PRVnet ${PRV_cidr}"
 #
 echo "build_CFG ${build_CFG}"
 echo ${RESET} ' '
