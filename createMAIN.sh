@@ -8,25 +8,25 @@
 # source ./createCFG.env     # each createFILE in turn calls this
 
 # VPC
-source ./createVPC.sh
+source ./createVPC
 
 # PUBLIC Subnet
-source ./createPUBnet.sh
+source ./createPUBnet
 
 # PRIVATE Subnet
-source ./createPRVnet.sh
+source ./createPRVnet
 
 # Internet Gateway
-source ./createIGW.sh
+source ./createIGW
 
 # Security Groups
-source ./createSecGrp.sh
+source ./createSecGrp
 
 # PEM pair
-source ./createPEMKEY.sh
+source ./createPEMKEY
 
 # PUB EC2
-source ./createPUBEC2.sh
+source ./createPUBEC2
 
 # add more as ready
 # ...
