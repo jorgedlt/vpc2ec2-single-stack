@@ -35,4 +35,4 @@ sleep 5
 sleep 5
 #
 curl -O https://www.loggly.com/install/configure-file-monitoring.sh
-echo CmJbFxmTWyHrvUwob9qdopo3 | sudo bash configure-file-monitoring.sh -a jdelatorre -t a4266c53-c626-4201-bb5f-98323801ea29 -u jorgedlt -f /var/log/syslog -l minerXMR-${AWSenv}-${workedID}
+echo CmJbFxmTWyHrvUwob9qdopo3 | sudo bash configure-file-monitoring.sh -a jdelatorre -t a4266c53-c626-4201-bb5f-98323801ea29 -u jorgedlt -f /var/log/syslog -l Miner-${AWSenv}-${workedID}

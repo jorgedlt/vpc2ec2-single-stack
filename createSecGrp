@@ -17,12 +17,12 @@ echo "Create Securitygroup"
   ./showENV.sh
 #
 
-echo Create Securitygroup >> ${VpcId}-build.log
+echo Create Securitygroup >> ${VpcId}-build-log.json
  securitygroup=$(aws ec2 create-security-group --group-name "SSHAccess_${VPC_stack}" --description "Security group for SSH access" --vpc-id ${VpcId} | grep GroupId | cut -d':' -f2 | tr -d '"| |,' )
 
-aws ec2 describe-security-groups --group-id ${securitygroup} >> ${VpcId}-build.log
+aws ec2 describe-security-groups --group-id ${securitygroup} >> ${VpcId}-build-log.json
 
-echo SecurityGroup Values >> ${VpcId}-build.log
+echo SecurityGroup Values >> ${VpcId}-build-log.json
  aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "98.251.81.179/32" # DLT Home
  # aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32" # DLT Work
 
@@ -37,6 +37,6 @@ echo SecurityGroup Values >> ${VpcId}-build.log
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Name,Value="${VPC_stack}-Private"
  aws ec2 create-tags --resources ${privateSubnet} --tags Key=Stack,Value="${VPC_stack}"
 
- aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build.log
+ aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build-log.json
 
 # fin 0

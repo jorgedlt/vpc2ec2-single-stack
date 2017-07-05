@@ -23,16 +23,25 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
 # create-key-pairs
 aws ec2 create-key-pair \
  --region ${AWS_DEFAULT_REGION} \
- --key-name "${myACCOUNT}-${myREGION}-${VpcId}" \
- | jq -r ".KeyMaterial" > ./${myACCOUNT}-${myREGION}-${VpcId}.pem
+ --key-name "${myACCOUNT}-${myREGION}-${VpcId}-${VPC_stack}-${EC2_stack}" \
+ | jq -r ".KeyMaterial" > ./${myACCOUNT}-${myREGION}-${VpcId}-${VPC_stack}-${EC2_stack}.pem
 
 #  | grep KeyMaterial | cut -d':' -f2 | tr -d ',|"| |')
 # echo -e ${MyKEY} > ${myACCOUNT}-${myREGION}-${VpcId}.pem
 
 # update creatCFG file
-echo "export EC2_keyname=${myACCOUNT}-${myREGION}-${VpcId}" >> ${build_CFG}
+echo "export EC2_keyname=${myACCOUNT}-${myREGION}-${VpcId}-${VPC_stack}-${EC2_stack}" >> ${build_CFG}
 
+# RESETs steps
+#
+# ec2kill all EC2s
+#
+# rm *.json
+# sudo rm *.pem
+#
+# clear createCFG.env
 #
 # aws ec2 describe-key-pairs
 # aws ec2 delete-key-pair --key-name
 #
+# use GUI to wipe VPC

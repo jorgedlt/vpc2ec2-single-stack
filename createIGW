@@ -19,29 +19,31 @@ echo "Create Internet Gateway"
 #
 
 #
-echo Create Internet Gateway >> ${VpcId}-build.log
+echo Create Internet Gateway >> ${VpcId}-build-log.json
  InternetGatewayId=$(aws ec2 create-internet-gateway | grep InternetGatewayId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${InternetGatewayId} --tags Key=Name,Value=InternetGateway-${vpc_stack}
 
-# update CFG with InternetGatewayId
+# update creatCFG file -- InternetGatewayId
+echo "export iNETGW=${InternetGatewayId}" >> ${build_CFG}
 
-echo Attach Gateway >> ${VpcId}-build.log
+echo Attach Gateway >> ${VpcId}-build-log.json
  aws ec2 attach-internet-gateway --vpc-id ${VpcId} --internet-gateway-id ${InternetGatewayId}
 
-echo Create Route Table >> ${VpcId}-build.log
+echo Create Route Table >> ${VpcId}-build-log.json
  RouteTableId=$(aws ec2 create-route-table --vpc-id "${VpcId}" | grep RouteTableId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=RouteTable-${VPC_stack}
 
- # update CFG with RouteTableId
+ # update creatCFG file -- RouteTableId
+ echo "export RouterID=${RouteTableId}" >> ${build_CFG}
 
-echo Create Routes >> ${VpcId}-build.log
+echo Create Routes >> ${VpcId}-build-log.json
  aws ec2 create-route --route-table-id "${RouteTableId}" --destination-cidr-block 0.0.0.0/0 --gateway-id "${InternetGatewayId}"
  aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=Route-${VPC_stack}
 
- aws ec2 describe-route-tables >> ${VpcId}-build.log
+ aws ec2 describe-route-tables >> ${VpcId}-build-log.json
 
-echo Route Associations >> ${VpcId}-build.log
- aws ec2 associate-route-table --subnet-id ${publicSubnet} --route-table-id ${RouteTableId} >> ${VpcId}-build.log
+echo Route Associations >> ${VpcId}-build-log.json
+ aws ec2 associate-route-table --subnet-id ${publicSubnet} --route-table-id ${RouteTableId} >> ${VpcId}-build-log.json
 
 # this is where I stopped - this works but need to describe to the log, and update the CFG file with new ENV
 

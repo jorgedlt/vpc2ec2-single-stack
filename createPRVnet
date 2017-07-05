@@ -21,8 +21,8 @@ echo "Create PRIVATE subnet "
  privateSubnet=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block "${PRV_cidr}" | grep 'SubnetId' | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources "${privateSubnet}" --tags Key=Name,Value=privateSubnet-${VPC_stack}
 
-echo ${privateSubnet} >> ${VpcId}-build.log
-aws ec2 describe-subnets --subnet-ids ${privateSubnet} >> ${VpcId}-build.log
+echo ${privateSubnet} >> ${VpcId}-build-log.json
+aws ec2 describe-subnets --subnet-ids ${privateSubnet} >> ${VpcId}-build-log.json
 
 # update creatCFG file
 echo "export PRVnet=${privateSubnet}" >> ${build_CFG}

@@ -2,7 +2,7 @@
 
 #
 # Create VPC, InternetGatewayId, Public & Private subnets with EC2
-#
+# As New Install and Disaster Recovery for Process Miner
 
 # Load ENV parameters
 # source ./createCFG.env     # each createFILE in turn calls this
@@ -26,11 +26,25 @@ source ./createSecGrp
 source ./createPEMKEY
 
 # PUB EC2
-source ./createPUBEC2
+source ./createPUBEC2          # get JAVA specs from Manan
 
-# add more as ready
-# ...
+# PRV EC2
+source ./createPRVEC2          # what makes the PRV different ?
 
 exit 0;
 
-# consider DNS and Elastic IP concerns as well
+#### Above are tested, Below are not
+
+# PUB EC2 with MYSQL
+source ./createPUBSQL          # get MYSQL specs from Manan
+
+# PUB RDS with MYSQL
+source ./createPUBRDS
+
+# API GW
+source ./createAPIGW
+
+# DYNAMODB
+source ./createDYNADB
+
+exit 0;

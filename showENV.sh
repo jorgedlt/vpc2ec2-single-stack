@@ -17,6 +17,9 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
  echo "${CYAN}  VPC_stack          :${YELLOW} ${VPC_stack}"
  echo "${CYAN}  EC2_stack          :${YELLOW} ${EC2_stack}"
  echo
+ echo "${CYAN}  iNETGW             :${YELLOW} ${iNETGW}"
+ echo "${CYAN}  RouterID           :${YELLOW} ${RouterID}"
+ echo
  echo "${CYAN}  PUBcidr            :${GREEN} ${PUB_cidr}"
  echo "${CYAN}  PRVcidr            :${GREEN} ${PRV_cidr}"
  echo "${CYAN}  PUBnet             :${YELLOW} ${PUBnet}"
