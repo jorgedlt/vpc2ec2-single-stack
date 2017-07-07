@@ -21,7 +21,7 @@ echo "Create Internet Gateway"
 #
 echo Create Internet Gateway >> ${VpcId}-build-log.json
  InternetGatewayId=$(aws ec2 create-internet-gateway | grep InternetGatewayId | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources ${InternetGatewayId} --tags Key=Name,Value=InternetGateway-${vpc_stack}
+ aws ec2 create-tags --resources ${InternetGatewayId} --tags Key=Name,Value=iNETGateway-${VPC_stack}
 
 # update creatCFG file -- InternetGatewayId
 echo "export iNETGW=${InternetGatewayId}" >> ${build_CFG}

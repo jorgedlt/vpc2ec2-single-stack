@@ -7,6 +7,8 @@
 # Load ENV parameters
 # source ./createCFG.env     # each createFILE in turn calls this
 
+# add something here to halt script if in wrong Account and/or Region
+
 # VPC
 source ./createVPC
 
@@ -29,7 +31,13 @@ source ./createPEMKEY
 source ./createPUBEC2          # get JAVA specs from Manan
 
 # PRV EC2
-source ./createPRVEC2          # what makes the PRV different ?
+# source ./createPRVEC2          # what makes the PRV different ?
+
+# PUB EC2 with JAVA
+source ./createPUBJAVA
+
+# PUB EC2 with MYSQL DB this will be PRIVATE once testing is complete
+source ./createPUBSQLDB
 
 exit 0;
 
@@ -48,3 +56,17 @@ source ./createAPIGW
 source ./createDYNADB
 
 exit 0;
+
+# RESETs steps
+#
+# ec2kill all EC2s
+#
+# rm *.json
+# sudo rm *.pem
+#
+# clear createCFG.env
+#
+# aws ec2 describe-key-pairs
+# aws ec2 delete-key-pair --key-name
+#
+# use GUI to wipe VPC

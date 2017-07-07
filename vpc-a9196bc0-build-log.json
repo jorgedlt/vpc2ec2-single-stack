@@ -1,0 +1,235 @@
+Thu Jul  6 20:31:01 EDT 2017
+vpc-a9196bc0
+{
+    "Vpcs": [
+        {
+            "VpcId": "vpc-a9196bc0", 
+            "InstanceTenancy": "default", 
+            "Tags": [
+                {
+                    "Value": "vpc07", 
+                    "Key": "Name"
+                }
+            ], 
+            "State": "available", 
+            "DhcpOptionsId": "dopt-faea0393", 
+            "CidrBlock": "10.33.0.0/16", 
+            "IsDefault": false
+        }, 
+        {
+            "VpcId": "vpc-b28069db", 
+            "InstanceTenancy": "default", 
+            "State": "available", 
+            "DhcpOptionsId": "dopt-faea0393", 
+            "CidrBlock": "172.31.0.0/16", 
+            "IsDefault": true
+        }
+    ]
+}
+publicSubnet subnet-c0a42bbb
+{
+    "Subnets": [
+        {
+            "VpcId": "vpc-a9196bc0", 
+            "Tags": [
+                {
+                    "Value": "publicSubnet-vpc07", 
+                    "Key": "Name"
+                }
+            ], 
+            "CidrBlock": "10.33.0.0/24", 
+            "MapPublicIpOnLaunch": false, 
+            "DefaultForAz": false, 
+            "State": "available", 
+            "AvailabilityZone": "us-east-2b", 
+            "SubnetId": "subnet-c0a42bbb", 
+            "AvailableIpAddressCount": 251
+        }
+    ]
+}
+Select Availability Zone
+subnet-f7a32c8c
+{
+    "Subnets": [
+        {
+            "VpcId": "vpc-a9196bc0", 
+            "Tags": [
+                {
+                    "Value": "privateSubnet-vpc07", 
+                    "Key": "Name"
+                }
+            ], 
+            "CidrBlock": "10.33.1.0/24", 
+            "MapPublicIpOnLaunch": false, 
+            "DefaultForAz": false, 
+            "State": "available", 
+            "AvailabilityZone": "us-east-2b", 
+            "SubnetId": "subnet-f7a32c8c", 
+            "AvailableIpAddressCount": 251
+        }
+    ]
+}
+Create Internet Gateway
+Attach Gateway
+Create Route Table
+Create Routes
+{
+    "RouteTables": [
+        {
+            "Associations": [], 
+            "RouteTableId": "rtb-1b571b72", 
+            "VpcId": "vpc-a9196bc0", 
+            "PropagatingVgws": [], 
+            "Tags": [
+                {
+                    "Value": "Route-vpc07", 
+                    "Key": "Name"
+                }
+            ], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "10.33.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }, 
+                {
+                    "GatewayId": "igw-e170f888", 
+                    "DestinationCidrBlock": "0.0.0.0/0", 
+                    "State": "active", 
+                    "Origin": "CreateRoute"
+                }
+            ]
+        }, 
+        {
+            "Associations": [
+                {
+                    "RouteTableAssociationId": "rtbassoc-48734921", 
+                    "Main": true, 
+                    "RouteTableId": "rtb-14521e7d"
+                }
+            ], 
+            "RouteTableId": "rtb-14521e7d", 
+            "VpcId": "vpc-a9196bc0", 
+            "PropagatingVgws": [], 
+            "Tags": [], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "10.33.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }
+            ]
+        }, 
+        {
+            "Associations": [
+                {
+                    "RouteTableAssociationId": "rtbassoc-5b6b8232", 
+                    "Main": true, 
+                    "RouteTableId": "rtb-c2d53cab"
+                }
+            ], 
+            "RouteTableId": "rtb-c2d53cab", 
+            "VpcId": "vpc-b28069db", 
+            "PropagatingVgws": [], 
+            "Tags": [], 
+            "Routes": [
+                {
+                    "GatewayId": "local", 
+                    "DestinationCidrBlock": "172.31.0.0/16", 
+                    "State": "active", 
+                    "Origin": "CreateRouteTable"
+                }, 
+                {
+                    "GatewayId": "igw-24d9364d", 
+                    "DestinationCidrBlock": "0.0.0.0/0", 
+                    "State": "active", 
+                    "Origin": "CreateRoute"
+                }
+            ]
+        }
+    ]
+}
+Route Associations
+{
+    "AssociationId": "rtbassoc-4d734924"
+}
+Create Securitygroup
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1", 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ], 
+                    "UserIdGroupPairs": [], 
+                    "PrefixListIds": []
+                }
+            ], 
+            "Description": "Security Group for SSH Access", 
+            "IpPermissions": [], 
+            "GroupName": "SSH-vpc07-rds01", 
+            "VpcId": "vpc-a9196bc0", 
+            "OwnerId": "674553401808", 
+            "GroupId": "sg-a25344cb"
+        }
+    ]
+}
+SecurityGroup Values
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1", 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ], 
+                    "UserIdGroupPairs": [], 
+                    "PrefixListIds": []
+                }
+            ], 
+            "Description": "Security Group for SSH Access", 
+            "IpPermissions": [
+                {
+                    "PrefixListIds": [], 
+                    "FromPort": 22, 
+                    "IpRanges": [
+                        {
+                            "CidrIp": "98.251.81.179/32"
+                        }, 
+                        {
+                            "CidrIp": "173.46.67.139/32"
+                        }, 
+                        {
+                            "CidrIp": "34.239.243.201/32"
+                        }, 
+                        {
+                            "CidrIp": "68.235.53.221/32"
+                        }, 
+                        {
+                            "CidrIp": "107.172.254.2/32"
+                        }, 
+                        {
+                            "CidrIp": "209.58.139.29/32"
+                        }
+                    ], 
+                    "ToPort": 22, 
+                    "IpProtocol": "tcp", 
+                    "UserIdGroupPairs": []
+                }
+            ], 
+            "GroupName": "SSH-vpc07-rds01", 
+            "VpcId": "vpc-a9196bc0", 
+            "OwnerId": "674553401808", 
+            "GroupId": "sg-a25344cb"
+        }
+    ]
+}

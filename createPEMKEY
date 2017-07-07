@@ -31,17 +31,3 @@ aws ec2 create-key-pair \
 
 # update creatCFG file
 echo "export EC2_keyname=${myACCOUNT}-${myREGION}-${VpcId}-${VPC_stack}-${EC2_stack}" >> ${build_CFG}
-
-# RESETs steps
-#
-# ec2kill all EC2s
-#
-# rm *.json
-# sudo rm *.pem
-#
-# clear createCFG.env
-#
-# aws ec2 describe-key-pairs
-# aws ec2 delete-key-pair --key-name
-#
-# use GUI to wipe VPC
