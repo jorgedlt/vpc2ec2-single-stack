@@ -22,8 +22,10 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
  echo
  echo "${CYAN}  PUBcidr            :${GREEN} ${PUB_cidr}"
  echo "${CYAN}  PRVcidr            :${GREEN} ${PRV_cidr}"
+ echo
  echo "${CYAN}  PUBnet             :${YELLOW} ${PUBnet}"
  echo "${CYAN}  PRVnet             :${YELLOW} ${PRVnet}"
+ echo "${CYAN}  DBSnet             :${YELLOW} ${DBSnet}"
  echo
  echo "${CYAN}  AWS_DEFAULT_REGION :${GREEN} ${AWS_DEFAULT_REGION}"
  echo "${CYAN}  AvailabilityZone   :${YELLOW} ${AvailabilityZone}"

@@ -34,10 +34,10 @@ source ./createPUBEC2          # get JAVA specs from Manan
 # source ./createPRVEC2          # what makes the PRV different ?
 
 # PUB EC2 with JAVA
-source ./createPUBJAVA
+# source ./createPUBJAVA
 
 # PUB EC2 with MYSQL DB this will be PRIVATE once testing is complete
-source ./createPUBSQLDB
+# source ./createPUBSQLDB
 
 exit 0;
 
@@ -70,3 +70,6 @@ exit 0;
 # aws ec2 delete-key-pair --key-name
 #
 # use GUI to wipe VPC
+#
+#
+#
