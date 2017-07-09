@@ -31,5 +31,4 @@ echo "Select Availability Zone" >> ${VpcId}-build-log.json
  # update creatCFG file
    echo "export AvailabilityZone=${AvailabilityZone}" >> ${build_CFG}
 
-
 # fin 0
