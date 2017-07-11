@@ -9,6 +9,8 @@
 
 # add something here to halt script if in wrong Account and/or Region
 
+# ./makeENV.sh
+
 # VPC
 source ./createVPC
 

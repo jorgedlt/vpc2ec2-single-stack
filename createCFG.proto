@@ -7,23 +7,23 @@
 # jorgedlt@gmail.com - 03 MAR 2017 / 02 JUL 2017
 # additional private documentation
 # see - https://docs.google.com/document/d/1RdN2hbPeSvrCDTa76iZyExmVhF-Ct9iv-TcFNMRZwSU/edit
-
 #
 
 # export AWS_DEFAULT_REGION=us-east-1    ; export EC2_ami="ami-2ef48339"    # us-east-1
-  export AWS_DEFAULT_REGION=us-east-2  ; export EC2_ami="ami-70edb615"      # us-east-2
+export AWS_DEFAULT_REGION=us-east-2  ; export EC2_ami="ami-70edb615"        # us-east-2
 # export AWS_DEFAULT_REGION=us-west-1  ; export EC2_ami="ami-a9a8e4c9"      # us-west-1
 # export AWS_DEFAULT_REGION=us-west-2  ; export EC2_ami="ami-746aba14"      # us-west-2
 
 # ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20160907 ( ebs | hvm )
 
-export vpc_stack="vpc-B1"
+export vpc_stack="vpc-c1"
+export ec2_stack="more"
+
 # Network Settings - network are valid /16 - /28
 export vpc_cidr="10.27.0.0/16"
 export pub_cidr="10.27.0.0/24"
 export prv_cidr="10.27.1.0/24"
-
-export ec2_stack="codeway"
+export DBS_cidr="10.27.2.0/24"
 
 # for Test I used SBD-DA AWS Account - us-east-2
 # export ec2_keyname="sbdda-autodeploy-B1"                              # us-east-2
@@ -37,5 +37,3 @@ export ec2_type="t2.medium"
 #    add S3 Logging Bucket
 
 ## some sort of check is needed should a script be run out of order with VPC, SUBnets etc.
-
-## programmatically add aditional env here
