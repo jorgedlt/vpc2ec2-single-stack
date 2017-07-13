@@ -56,20 +56,3 @@ source ./createAPIGW
 source ./createDYNADB
 
 exit 0;
-
-# RESETs steps
-#
-# ec2kill all EC2s
-#
-# rm *.json
-# sudo rm *.pem
-#
-# clear createCFG.env
-#
-# aws ec2 describe-key-pairs
-# aws ec2 delete-key-pair --key-name
-#
-# use GUI to wipe VPC
-#
-#
-#
