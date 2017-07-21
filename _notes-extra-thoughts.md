@@ -141,3 +141,23 @@ Then put it together and compare the 2 lists and see what's not being used from 
 
  comm -23  <(aws ec2 describe-security-groups --query 'SecurityGroups[*].GroupId'  --output text | tr '\t' '\n'| sort) <(aws ec2 describe-instances --query 'Reservations[*].Instances[*].SecurityGroups[*].GroupId' --output text | tr '\t' '\n' | sort | uniq)
 shareedit
+
+###
+
+I have setup qa portal and identity servers.
+
+https://qa-portal.processminer.com
+https://qa-identity.processminer.com
+
+Everything on this server has been setup using scripts (code + tools + configuration): https://bitbucket.org/processminer1/code-deployment-scripts
+
+e.g.
+- for setting up qa identity server run: sh ./master.sh identity qa
+- for setting up qa portal server run: sh ./master.sh portal qa
+
+Database server is also setup using scripts (34.213.10.221), but it still needs some manual steps (i.e. taking latest database backup and import it. we'll automate them later)
+
+I have created some changes to security groups. These 2 servers are open to all right now on port 80 and 443, but I believe its fine since they are QA servers.
+
+All these servers are using temporary public IP addresses. I think we should move to elastic IP addresses and update A records for above sub-domains. Let me know when this is done.
+
