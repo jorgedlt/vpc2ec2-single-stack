@@ -33,7 +33,7 @@ source ./createPEMKEY
 source ./createPUBEC2          # get JAVA specs from Manan
 
 # PRV EC2
-# source ./createPRVEC2          # what makes the PRV different ?
+source ./createPRVEC2          # what makes the PRV different ?
 
 # PUB EC2 with JAVA
 # source ./createPUBJAVA

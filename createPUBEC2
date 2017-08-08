@@ -24,7 +24,7 @@ InstancePub=$(aws ec2 run-instances --count 1 \
  --security-group-ids "${SGssh}" \
  --subnet-id "${PUBnet}" \
  --associate-public-ip-address \
- --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
+ --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":100}}]" \
  --user-data file://ec2configs/public-ec2-build.sh \
  --placement AvailabilityZone="${AvailabilityZone}" \
   | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )

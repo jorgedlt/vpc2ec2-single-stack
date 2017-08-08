@@ -23,7 +23,7 @@ InstancePrv=$(aws ec2 run-instances --count 1 \
  --key-name "${EC2_keyname}" \
  --security-group-ids "${SGssh}" \
  --subnet-id "${PRVnet}" \
- --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":16}}]" \
+ --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":100}}]" \
  --user-data file://ec2configs/private-ec2-build.sh \
  --placement AvailabilityZone="${AvailabilityZone}" \
   | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
