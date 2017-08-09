@@ -9,25 +9,31 @@
 
 # add something here to halt script if in wrong Account and/or Region
 
-# ./makeENV.sh
-
 # VPC
 source ./createVPC
 
 # PUBLIC Subnet
-source ./createPUBnet
+source ./createPUBnet1
+
+# PUBLIC Subnet
+source ./createPUBnet2
 
 # PRIVATE Subnet
-source ./createPRVnet
+source ./createPRVnet1
+
+# PRIVATE Subnet
+source ./createPRVnet2
 
 # Internet Gateway
 source ./createIGW
+
+exit 0;
 
 # Security Groups
 source ./createSecGrp
 
 # PEM pair
-source ./createPEMKEY
+# source ./createPEMKEY
 
 # PUB EC2
 source ./createPUBEC2          # get JAVA specs from Manan
