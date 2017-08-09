@@ -17,7 +17,7 @@ echo "Create PUBLIC subnet"
 #
 
  publicSub2=$(aws ec2 create-subnet --vpc-id "${VpcId}" --cidr-block ${PUB2cidr} --availability-zone ${PUB2azone} | grep SubnetId | cut -d':' -f2 | tr -d '"| |,')
- aws ec2 create-tags --resources ${publicSub2} --tags Key=Name,Value=PUBNET2-${VPC_stack}
+ aws ec2 create-tags --resources ${publicSub2} --tags Key=Name,Value=publicSub2-${VPC_stack}
 
 echo PUBNET2 ${publicSub2} >> ${VpcId}-build-log.json
  aws ec2 describe-subnets --subnet-ids ${publicSub2} >> ${VpcId}-build-log.json

@@ -39,7 +39,7 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
  echo "${CYAN}  DBSnet2             :${YELLOW} ${DBSnet2}"
  echo
  echo "${CYAN}  AWS_DEFAULT_REGION :${GREEN} ${AWS_DEFAULT_REGION}"
- echo "${CYAN}  AvailabilityZone   :${YELLOW} ${AvailabilityZone}"
+ echo
  echo "${CYAN}  SGssh              :${YELLOW} ${SGssh}"
  echo "${CYAN}  EC2_ami            :${GREEN} ${EC2_ami}"
  echo "${CYAN}  EC2_type           :${GREEN} ${EC2_type}"
