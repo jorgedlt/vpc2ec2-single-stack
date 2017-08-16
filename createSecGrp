@@ -25,25 +25,29 @@ aws ec2 describe-security-groups --group-id ${securitygroup} >> ${VpcId}-build-l
 echo SecurityGroup Values >> ${VpcId}-build-log.json
 
 # Hot 3 -- DLT Home and Work Plus Manan
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "98.251.81.179/32"  # DLT Home
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32"  # DLT Work
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "34.239.243.201/32" # Manan WS
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "98.251.81.179/32"  # DLT Home
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "173.46.67.139/32"  # DLT Work
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "34.239.243.201/32" # Manan WS
 
 # VPN 3 via NORD
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "68.235.53.221/32" # NORD Chicago
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "107.172.254.2/32" # NORD Buffalo
- aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "209.58.139.29/32" # NORD SanJose
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "68.235.53.221/32" # NORD Chicago
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "107.172.254.2/32" # NORD Buffalo
+ #aws ec2 authorize-security-group-ingress --group-id ${securitygroup} --protocol tcp --port 22 --cidr "209.58.139.29/32" # NORD SanJose
 
  #
- aws ec2 create-tags --resources ${publicSubnet} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Public"
- aws ec2 create-tags --resources ${publicSubnet} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
+ aws ec2 create-tags --resources ${PUBnet1} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Public"
+ aws ec2 create-tags --resources ${PUBnet1} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
+
+ ## double up
 
 # update creatCFG file
   echo "export SGssh=${securitygroup}" >> ${build_CFG}
 
  #
- aws ec2 create-tags --resources ${privateSubnet} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Private"
- aws ec2 create-tags --resources ${privateSubnet} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
+ aws ec2 create-tags --resources ${PRVnet1} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Private"
+ aws ec2 create-tags --resources ${PRVnet1} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
+
+ ## double up
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build-log.json
 
