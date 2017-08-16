@@ -38,12 +38,16 @@ echo SecurityGroup Values >> ${VpcId}-build-log.json
  aws ec2 create-tags --resources ${PUBnet1} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Public"
  aws ec2 create-tags --resources ${PUBnet1} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
 
+ ## double up
+
 # update creatCFG file
   echo "export SGssh=${securitygroup}" >> ${build_CFG}
 
  #
  aws ec2 create-tags --resources ${PRVnet1} --tags Key=Name,Value="${VPC_stack}-${EC2_stack}-Private"
  aws ec2 create-tags --resources ${PRVnet1} --tags Key=Stack,Value="${VPC_stack}-${EC2_stack}"
+
+ ## double up
 
  aws ec2 describe-security-groups --group-ids ${securitygroup} >> ${VpcId}-build-log.json
 
