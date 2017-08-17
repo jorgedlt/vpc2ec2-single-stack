@@ -27,16 +27,19 @@ source ./createPRVnet2
 # Internet Gateway
 source ./createIGW
 
-exit 0;
-
 # Security Groups
 source ./createSecGrp
 
 # PEM pair
-# source ./createPEMKEY
+source ./createPEMKEY
 
 # PUB EC2
-source ./createPUBEC2          # get JAVA specs from Manan
+source ./createPUBEC2-1          #  
+
+# PUB EC2
+source ./createPUBEC2-2          #
+
+exit 0;
 
 # PRV EC2
 source ./createPRVEC2          # what makes the PRV different ?

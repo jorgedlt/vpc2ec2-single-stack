@@ -11,13 +11,13 @@
 # Load ENV parameters
 source ./createCFG.env
 
-echo "Create EC2-Public"
+echo "Create EC2-Public 1"
 
 #debug block
   ./showENV.sh
 #
 
-InstancePub=$(aws ec2 run-instances --count 1 \
+EC2pub2=$(aws ec2 run-instances --count 1 \
  --image-id "${EC2_ami}" \
  --instance-type "${EC2_type}" \
  --key-name "${EC2_keyname}" \
@@ -26,7 +26,7 @@ InstancePub=$(aws ec2 run-instances --count 1 \
  --associate-public-ip-address \
  --block-device-mappings "[{\"DeviceName\": \"/dev/sda1\",\"Ebs\":{\"VolumeSize\":100}}]" \
  --user-data file://ec2configs/public-ec2-build.sh \
- --placement AvailabilityZone="${AvailabilityZone}" \
+ --placement AvailabilityZone="${AZone2}" \
   | grep InstanceId | cut -d':' -f2 | tr -d '"|,| ' )
 
 #   --user-data file://ec2configs/public-ec2-build.sh \
@@ -35,5 +35,5 @@ InstancePub=$(aws ec2 run-instances --count 1 \
 #
   workerID=$( echo {0..9}{0..9}{0..9}{0..9} | tr ' ' '\012' | gshuf | head -1 )
 #
-  aws ec2 create-tags --resources ${InstancePub} --tags Key=Name,Value=${VPC_stack}-${EC2_stack}-PUB-${workerID}
+  aws ec2 create-tags --resources ${EC2pub2} --tags Key=Name,Value=${VPC_stack}-${EC2_stack}-PUB2-${workerID}
 #
