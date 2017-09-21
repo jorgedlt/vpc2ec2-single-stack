@@ -13,16 +13,10 @@
 source ./createVPC
 
 # PUBLIC Subnet
-source ./createPUBnet1
-
-# PUBLIC Subnet
-source ./createPUBnet2
+source ./createPUBnet
 
 # PRIVATE Subnet
-source ./createPRVnet1
-
-# PRIVATE Subnet
-source ./createPRVnet2
+source ./createPRVnet
 
 # Internet Gateway
 source ./createIGW
@@ -34,36 +28,14 @@ source ./createSecGrp
 source ./createPEMKEY
 
 # PUB EC2
-source ./createPUBEC2-1          #  
-
-# PUB EC2
-source ./createPUBEC2-2          #
+source ./createPUBEC2
 
 exit 0;
-
-# PRV EC2
-source ./createPRVEC2          # what makes the PRV different ?
 
 # PUB EC2 with JAVA
 # source ./createPUBJAVA
 
 # PUB EC2 with MYSQL DB this will be PRIVATE once testing is complete
 # source ./createPUBSQLDB
-
-exit 0;
-
-#### Above are tested, Below are not
-
-# PUB EC2 with MYSQL
-source ./createPUBSQL          # get MYSQL specs from Manan
-
-# PUB RDS with MYSQL
-source ./createPUBRDS
-
-# API GW
-source ./createAPIGW
-
-# DYNAMODB
-source ./createDYNADB
 
 exit 0;
