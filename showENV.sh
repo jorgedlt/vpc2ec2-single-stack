@@ -20,23 +20,14 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
  echo "${CYAN}  iNETGW             :${YELLOW} ${iNETGW}"
  echo "${CYAN}  RouterID           :${YELLOW} ${RouterID}"
  echo
- echo "${CYAN}  PUB1cidr            :${GREEN} ${PUB1cidr}"
- echo "${CYAN}  PRV1cidr            :${GREEN} ${PRV1cidr}"
- echo
- echo "${CYAN}  PUB2cidr            :${GREEN} ${PUB2cidr}"
- echo "${CYAN}  PRV2cidr            :${GREEN} ${PRV2cidr}"
+ echo "${CYAN}  PUB_cidr            :${GREEN} ${PUB_cidr}"
+ echo "${CYAN}  PRV_cidr            :${GREEN} ${PRV_cidr}"
  echo
  echo "${CYAN}  AZone1              :${YELLOW} ${AZone1}"
  echo
- echo "${CYAN}  PUBnet1             :${YELLOW} ${PUBnet1}"
- echo "${CYAN}  PRVnet1             :${YELLOW} ${PRVnet1}"
- echo "${CYAN}  DBSnet1             :${YELLOW} ${DBSnet1}"
- echo
- echo "${CYAN}  AZone2              :${YELLOW} ${AZone2}"
- echo
- echo "${CYAN}  PUBnet2             :${YELLOW} ${PUBnet2}"
- echo "${CYAN}  PRVnet2             :${YELLOW} ${PRVnet2}"
- echo "${CYAN}  DBSnet2             :${YELLOW} ${DBSnet2}"
+ echo "${CYAN}  PUB_net             :${YELLOW} ${PUB_net}"
+ echo "${CYAN}  PRV_net             :${YELLOW} ${PRV_net}"
+ echo "${CYAN}  DBS_net             :${YELLOW} ${DBS_net}" 
  echo
  echo "${CYAN}  AWS_DEFAULT_REGION :${GREEN} ${AWS_DEFAULT_REGION}"
  echo
