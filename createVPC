@@ -18,7 +18,7 @@ echo "create AWS-VPC"
 #
 
 # aws ec2 create-vpc
-VpcId=$(aws ec2 create-vpc --cidr-block ${VPCcidr} | grep VpcId | cut -d':' -f2 | tr -d '"| |,')
+VpcId=$(aws ec2 create-vpc --cidr-block ${VPC_cidr} | grep VpcId | cut -d':' -f2 | tr -d '"| |,')
  aws ec2 create-tags --resources ${VpcId} --tags Key=Name,Value="${VPC_stack}"
 
 date             > ${VpcId}-build-log.json

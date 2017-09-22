@@ -3,11 +3,11 @@
 # Load ENV parameters
 source ./createCFG.env
 
-# debug block
-echo
-#
 export myACCOUNT=$(aws iam list-account-aliases | tr -d '{|}|[|]|"| |-' | egrep -v ':|^$');
 export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{|}|[|]|"| |-' );
+
+# debug block
+echo
 #
  echo "${CYAN}  ACCOUNT            :${WHITE} ${myACCOUNT}"
  echo "${CYAN}  REGION             :${WHITE} ${myREGION}"
@@ -20,14 +20,13 @@ export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{
  echo "${CYAN}  iNETGW             :${YELLOW} ${iNETGW}"
  echo "${CYAN}  RouterID           :${YELLOW} ${RouterID}"
  echo
- echo "${CYAN}  PUB_cidr            :${GREEN} ${PUB_cidr}"
- echo "${CYAN}  PRV_cidr            :${GREEN} ${PRV_cidr}"
+ echo "${CYAN}  PUB_cidr           :${GREEN} ${PUB_cidr}"
+ echo "${CYAN}  PRV_cidr           :${GREEN} ${PRV_cidr}"
  echo
- echo "${CYAN}  AZone1              :${YELLOW} ${AZone1}"
+ echo "${CYAN}  AZone              :${YELLOW} ${AvailabilityZone}"
  echo
- echo "${CYAN}  PUB_net             :${YELLOW} ${PUB_net}"
- echo "${CYAN}  PRV_net             :${YELLOW} ${PRV_net}"
- echo "${CYAN}  DBS_net             :${YELLOW} ${DBS_net}" 
+ echo "${CYAN}  PUB_net            :${YELLOW} ${PUBnet}"
+ echo "${CYAN}  PRV_net            :${YELLOW} ${PRVnet}"
  echo
  echo "${CYAN}  AWS_DEFAULT_REGION :${GREEN} ${AWS_DEFAULT_REGION}"
  echo

@@ -4,10 +4,17 @@
 # Create VPC, InternetGatewayId, Public & Private subnets with EC2
 # As New Install and Disaster Recovery for Process Miner
 
-# Load ENV parameters
-# source ./createCFG.env     # each createFILE in turn calls this
-
 # add something here to halt script if in wrong Account and/or Region
+export myACCOUNT=$(aws iam list-account-aliases | tr -d '{|}|[|]|"| |-' | egrep -v ':|^$');
+export myREGION=$(aws configure list | grep region | awk '{print $2}' | tr -d '{|}|[|]|"| |-' );
+
+source ./createCFG.env
+
+echo $myACCOUNT $AWSaccount
+[[ "$myACCOUNT" -eq "$AWSaccount" ]] && { : ; } || { echo ERROR Account MisMatch ; exit ; }
+
+cleanCFG=$(tail -n +27 createCFG.env | egrep -ic "VpcId|Pubnet|AvailabilityZone|PRVnet|iNETGW|RouterID")
+[ $cleanCFG -gt 0 ] && { echo ERROR Config file is already populated ; exit ; }
 
 # VPC
 source ./createVPC
@@ -30,6 +37,7 @@ source ./createPEMKEY
 # PUB EC2
 source ./createPUBEC2
 
+env > $$.env-file
 exit 0;
 
 # PUB EC2 with JAVA

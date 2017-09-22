@@ -37,16 +37,15 @@ echo Create Route Table >> ${VpcId}-build-log.json
  echo "export RouterID=${RouteTableId}" >> ${build_CFG}
 
 echo Create Routes >> ${VpcId}-build-log.json
- aws ec2 create-route --route-table-id "${RouteTableId}" --destination-cidr-block 0.0.0.0/0 --gateway-id "${InternetGatewayId}"
- aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=Route-${VPC_stack}
+ aws ec2 create-route --route-table-id "${RouteTableId}" --destination-cidr-block 0.0.0.0/0 --gateway-id "${InternetGatewayId}" > /dev/null 2>&1
 
+ aws ec2 create-tags --resources ${RouteTableId} --tags Key=Name,Value=Route-${VPC_stack}
  aws ec2 describe-route-tables >> ${VpcId}-build-log.json
 
 echo Route Associations >> ${VpcId}-build-log.json
  aws ec2 associate-route-table --subnet-id ${publicSubnet} --route-table-id ${RouteTableId} >> ${VpcId}-build-log.json
 
 # this is where I stopped - this works but need to describe to the log, and update the CFG file with new ENV
-
 # optionally - an instance launched into the subnet automatically receives a public IP address
 # aws ec2 modify-subnet-attribute --subnet-id ${publicSubnet} --map-public-ip-on-launch
 # research how to bind ElasticIP at launch
